@@ -1,12 +1,16 @@
 package action
 
 import (
+	"embed"
 	"fmt"
 	"log"
 	"os"
 
 	"github.com/urfave/cli"
 )
+
+//go:embed cookbook/*
+var cookbook embed.FS
 
 func createDockerfile() {
   df, err := os.Create("Dockerfile")
@@ -22,12 +26,16 @@ func Init(c *cli.Context) {
 }
 
 func Create(c *cli.Context) {
-  rd, err := os.ReadFile("../cookbook/go-dockerfile")
-  if err != nil {
-    log.Fatal(err)
-  }
-  err = os.WriteFile("Dockerfile", rd, 0755)
-  if err != nil {
-    log.Fatal(err)
+  switch(os.Args[2]){
+  case "go":
+    rd, err := cookbook.ReadFile("cookbook/go-dockerfile")
+    if err != nil {
+      log.Fatal(err)
+    }
+    err = os.WriteFile("Dockerfile", rd, 0644)
+    if err != nil {
+      log.Fatal(err)
+    }
+    fmt.Println("create Dockerfile for Golang")
   }
 }
