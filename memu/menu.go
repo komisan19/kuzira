@@ -22,8 +22,13 @@ func commands() []cli.Command{
   return []cli.Command{
     {
       Name: "init",
-      Usage: "create Dockerfile",
+      Usage: "create on empty Dockerfile",
       Action: action.Init,
+    },
+    {
+      Name: "create",
+      Usage: "create Dockerfile for each language",
+      Action: action.Create,
     },
   }
 }
