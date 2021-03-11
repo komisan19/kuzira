@@ -26,12 +26,16 @@ func Init(c *cli.Context) {
 }
 
 func Create(c *cli.Context) {
-  rd, err := cookbook.ReadFile("cookbook/go-dockerfile")
-  if err != nil {
-    log.Fatal(err)
-  }
-  err = os.WriteFile("Dockerfile", rd, 0644)
-  if err != nil {
-    log.Fatal(err)
+  switch(os.Args[2]){
+  case "go":
+    rd, err := cookbook.ReadFile("cookbook/go-dockerfile")
+    if err != nil {
+      log.Fatal(err)
+    }
+    err = os.WriteFile("Dockerfile", rd, 0644)
+    if err != nil {
+      log.Fatal(err)
+    }
+    fmt.Println("create Dockerfile for Golang")
   }
 }
